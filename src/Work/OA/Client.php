@@ -21,6 +21,33 @@ use EasyWeChat\Kernel\BaseClient;
 class Client extends BaseClient
 {
     /**
+     * 批量获取汇报记录单号.
+     *
+     * @param int   $startTime
+     * @param int   $endTime
+     * @param array $filters
+     * @param int   $cursor
+     * @param int   $limit
+     *
+     * @return mixed
+     *
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function journalRecords(int $startTime, int $endTime, array $filters, int $cursor = 0, int $limit = 10)
+    {
+        $params = [
+            'starttime' => $startTime,
+            'endtime' => $endTime,
+            'cursor' => $cursor,
+            'limit' => $limit,
+            'filters' => $filters,
+        ];
+
+        return $this->httpPostJson('cgi-bin/oa/journal/get_record_list', $params);
+    }
+
+    /**
      * Get the checkin data.
      *
      * @param int   $startTime
